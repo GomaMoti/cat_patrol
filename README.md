@@ -1,5 +1,7 @@
 # 🐱 グロックと猫のパトロール (Grok & Cat Patrol)
 
+ X/Twitter spam detector using Grok AI — scams, bots, engagement farmers.Built with AI assistance.
+
 X（Twitter）のタイムラインに現れる怪しいアカウントを、Grok AIを使って瞬時に分析・パトロールするためのChrome拡張機能です
 <br>このプロジェクトは、自認猫のAIと口うるさい人間によってつくられましたにゃ！猫の手も借りたいですニャ🐾
 
