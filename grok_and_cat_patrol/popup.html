@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grok & Cat Patrol - Settings</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 360px;
+      min-height: 200px;
+      background: #0f1923;
+      color: #cde;
+      font-family: 'Hiragino Sans', 'Yu Gothic UI', 'Segoe UI', sans-serif;
+      font-size: 13px;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a2a3a, #0f1923);
+      border-bottom: 1px solid #1e3048;
+      padding: 14px 16px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-icon { font-size: 22px; }
+
+    .header-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #c8d3e0;
+      line-height: 1.2;
+    }
+
+    .header-ver {
+      font-size: 10px;
+      color: #8899aa;
+    }
+
+    .body { padding: 12px 14px 8px; display: flex; flex-direction: column; gap: 14px; }
+
+    /* セクション */
+    .section { display: flex; flex-direction: column; gap: 6px; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #1d9bf0;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 10px;
+      background: #1a2736;
+      border-radius: 8px;
+      border: 1px solid #1e3048;
+    }
+
+    .setting-row-col {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 8px 10px;
+      background: #1a2736;
+      border-radius: 8px;
+      border: 1px solid #1e3048;
+    }
+
+    .setting-key {
+      font-size: 12px;
+      color: #aabbcc;
+      white-space: nowrap;
+    }
+
+    .setting-note {
+      font-size: 10px;
+      color: #8899aa;
+      margin-top: 2px;
+    }
+
+    input[type="text"] {
+      width: 60px;
+      background: #0f1923;
+      border: 1px solid #2a3a4a;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 18px;
+      text-align: center;
+      padding: 4px;
+      outline: none;
+    }
+
+    input[type="text"]:focus { border-color: #1d9bf0; }
+
+    /* ラジオ */
+    .radio-group { display: flex; flex-direction: column; gap: 5px; }
+
+    .radio-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #aabbcc;
+      cursor: pointer;
+    }
+
+    .radio-label input { accent-color: #1d9bf0; cursor: pointer; }
+
+    /* チェックボックス（カテゴリ） */
+    .check-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #aabbcc;
+      cursor: pointer;
+      padding: 3px 0;
+    }
+
+    .check-label input { accent-color: #1d9bf0; cursor: pointer; }
+
+    /* セレクト */
+    select {
+      background: #0f1923;
+      border: 1px solid #2a3a4a;
+      border-radius: 6px;
+      color: #cde;
+      font-size: 12px;
+      padding: 4px 8px;
+      outline: none;
+      font-family: inherit;
+    }
+
+    select:focus { border-color: #1d9bf0; }
+
+    /* テキストエリア */
+    textarea {
+      width: 100%;
+      background: #0f1923;
+      border: 1px solid #2a3a4a;
+      border-radius: 6px;
+      color: #cde;
+      font-size: 11px;
+      padding: 6px 8px;
+      resize: vertical;
+      font-family: inherit;
+      line-height: 1.5;
+      outline: none;
+      min-height: 56px;
+    }
+
+    textarea:focus { border-color: #1d9bf0; }
+
+    /* ボタン */
+    .btn-danger {
+      background: transparent;
+      border: 1px solid #c0392b55;
+      color: #e57373;
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 11px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .btn-danger:hover { background: rgba(192, 57, 43, 0.2); border-color: #e57373; }
+
+    .btn-reset {
+      background: transparent;
+      border: 1px solid #2a3a4a;
+      color: #8899aa;
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 10px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .btn-reset:hover { color: #aabbcc; border-color: #aabbcc; }
+
+    /* フッター */
+    .footer {
+      padding: 8px 14px 12px;
+      border-top: 1px solid #1e2d3d;
+      font-size: 10px;
+      color: #778899;
+      line-height: 1.6;
+    }
+
+    .saved-toast {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #1d9bf0;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 18px;
+      border-radius: 20px;
+      opacity: 0;
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+
+    .saved-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-icon">🐱</div>
+    <div style="flex-grow: 1;">
+      <div class="header-title" data-i18n="appTitle">グロックと猫のパトロール</div>
+      <div class="header-ver">v2.1.0</div>
+    </div>
+    <div>
+      <select id="lang-select" style="padding: 2px 4px; font-size: 11px; font-weight: bold; background: #1a2736; border: 1px solid #2a3a4a; color: #cde;">
+        <option value="ja">🇯🇵 JP</option>
+        <option value="en">🇺🇸 EN</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <!-- [0] アイコンクリックの動作 -->
+    <div class="section">
+      <div class="section-label" data-i18n="secIconClick">🖱 アイコンクリックの動作</div>
+      <div class="setting-row-col">
+        <div class="radio-group">
+          <label class="radio-label">
+            <input type="radio" name="iconClickMode" value="settings" id="ico-settings">
+            <span data-i18n="optIconSettings">この設定画面を開く（デフォルト）</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="iconClickMode" value="manual" id="ico-manual">
+            <span data-i18n="optIconManual">手動でハンドル入力して調べる</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 手動入力エリア（iconClickMode=manualのときのみ表示） -->
+    <div class="section" id="manual-section" style="display:none;">
+      <div class="section-label" data-i18n="secManual">🔍 手動検索</div>
+      <div class="setting-row-col">
+        <div class="setting-key" data-i18n="lblManualInput">@ハンドル or URL を入力して調べる</div>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <input type="text" id="manual-handle" placeholder="@handle" style="width:100%;font-size:13px;">
+          <button id="manual-submit" data-i18n="btnManualSearch" style="background:#2f3e56;border:none;border-radius:8px;color:#e4e8ec;font-size:12px;font-weight:700;padding:6px 12px;cursor:pointer;white-space:nowrap;font-family:inherit;">調べる</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- [1] ボタン絵文字 -->
+    <div class="section">
+      <div class="section-label" data-i18n="secEmoji">😺 ツイートボタン絵文字</div>
+      <div class="setting-row">
+        <span class="setting-key" data-i18n="lblEmoji">タイムライン上のボタン文字</span>
+        <input type="text" id="button-emoji" maxlength="2" value="🐱">
+      </div>
+    </div>
+
+    <!-- [2] クリック動作 -->
+    <div class="section">
+      <div class="section-label" data-i18n="secClickMode">⚡ ツイートボタンのクリック動作</div>
+      <div class="setting-row-col">
+        <div class="radio-group">
+          <label class="radio-label">
+            <input type="radio" name="clickMode" value="instant" id="click-instant">
+            <span data-i18n="optClickInstant">即Grok起動（シングルクリックで即分析）</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="clickMode" value="modal" id="click-modal">
+            <span data-i18n="optClickModal">チェックボックスを先に表示してから分析</span>
+          </label>
+        </div>
+        <div class="setting-note" data-i18n="noteClick">※ 長押し（300ms）またはShiftクリックは常にチェックボックスを表示</div>
+      </div>
+    </div>
+
+    <!-- [3] プロンプト編集 -->
+    <div class="section">
+      <div class="section-label" data-i18n="secPrompt">📝 Grokプロンプトテンプレート</div>
+      <div class="setting-row-col" style="gap:8px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span class="setting-key" data-i18n="lblPromptTemplate">プロンプト全体（{handle} などの変数が使えます）</span>
+          <button class="btn-reset" id="reset-prompt" data-i18n="btnReset">デフォルトに戻す</button>
+        </div>
+        <textarea id="prompt-template" rows="8"></textarea>
+      </div>
+    </div>
+
+    <!-- [4] カテゴリON/OFF -->
+    <div class="section">
+      <div class="section-label" data-i18n="secCategories">🚩 チェックカテゴリ</div>
+      <div class="setting-row-col">
+        <div id="categories-list"></div>
+      </div>
+    </div>
+
+    <!-- [4.5] カスタムチェックリスト -->
+    <div class="section">
+      <div class="section-label" data-i18n="secCustomList">📝 カスタムチェックリスト</div>
+      <div class="setting-row-col" style="gap:8px;">
+        <label class="check-label" style="font-weight:700; color:#cde;">
+          <input type="checkbox" id="use-custom-categories">
+          <span data-i18n="optUseCustom">カスタムリストを使用する</span>
+        </label>
+        
+        <div id="custom-list-area" style="display:none; margin-top:4px; flex-direction:column; gap:12px;">
+          <!-- カテゴリ1 -->
+          <div style="border-left: 2px solid #1d9bf0; padding-left: 8px;">
+            <div style="font-size:11px; color:#aabbcc; margin-bottom:4px;">Cat 1</div>
+            <input type="text" id="cust-cat1-name" data-i18n-placeholder="placeholderCatName" placeholder="カテゴリ名" style="width:100%; font-size:12px; margin-bottom:4px; text-align:left;">
+            <textarea id="cust-cat1-items" data-i18n-placeholder="placeholderCatItems" rows="4" placeholder="項目（1行に1つ）"></textarea>
+          </div>
+          <!-- カテゴリ2 -->
+          <div style="border-left: 2px solid #1d9bf0; padding-left: 8px;">
+            <div style="font-size:11px; color:#aabbcc; margin-bottom:4px;">Cat 2</div>
+            <input type="text" id="cust-cat2-name" data-i18n-placeholder="placeholderCatName" placeholder="カテゴリ名" style="width:100%; font-size:12px; margin-bottom:4px; text-align:left;">
+            <textarea id="cust-cat2-items" data-i18n-placeholder="placeholderCatItems" rows="4" placeholder="項目（1行に1つ）"></textarea>
+          </div>
+          <!-- カテゴリ3 -->
+          <div style="border-left: 2px solid #1d9bf0; padding-left: 8px;">
+            <div style="font-size:11px; color:#aabbcc; margin-bottom:4px;">Cat 3</div>
+            <input type="text" id="cust-cat3-name" data-i18n-placeholder="placeholderCatName" placeholder="カテゴリ名" style="width:100%; font-size:12px; margin-bottom:4px; text-align:left;">
+            <textarea id="cust-cat3-items" data-i18n-placeholder="placeholderCatItems" rows="4" placeholder="項目（1行に1つ）"></textarea>
+          </div>
+          <!-- カテゴリ4 -->
+          <div style="border-left: 2px solid #1d9bf0; padding-left: 8px;">
+            <div style="font-size:11px; color:#aabbcc; margin-bottom:4px;">Cat 4</div>
+            <input type="text" id="cust-cat4-name" data-i18n-placeholder="placeholderCatName" placeholder="カテゴリ名" style="width:100%; font-size:12px; margin-bottom:4px; text-align:left;">
+            <textarea id="cust-cat4-items" data-i18n-placeholder="placeholderCatItems" rows="4" placeholder="項目（1行に1つ）"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- [5] キャッシュ管理 -->
+    <div class="section">
+      <div class="section-label" data-i18n="secCache">🗂 キャッシュ管理</div>
+      <div class="setting-row">
+        <span class="setting-key" data-i18n="lblCacheExpiry">調査済み有効期限</span>
+        <select id="cache-expire">
+          <option value="1800000" data-i18n="optMin30">30分</option>
+          <option value="3600000" data-i18n="optHour1">1時間</option>
+          <option value="10800000" data-i18n="optHour3">3時間</option>
+          <option value="86400000" data-i18n="optHour24">24時間</option>
+        </select>
+      </div>
+      <div style="padding:4px 0;">
+        <button class="btn-danger" id="clear-cache" data-i18n="btnClearCache">🗑 キャッシュをすべてクリア</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer" data-i18n="footerText">
+    🔒 設定・キャッシュはローカルに保存。外部送信なし。<br>
+    分析データはGrok（x.com）にのみ送信されます。
+  </div>
+
+  <div class="saved-toast" id="toast" data-i18n="toastSaved">保存しました ✓</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
