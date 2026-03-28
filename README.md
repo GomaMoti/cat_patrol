@@ -21,7 +21,7 @@ X（Twitter）のタイムラインに現れる怪しいアカウントを、Gro
 1. このリポジトリをダウンロード（ZIPでダウンロードして解凍、または `git clone`）。
 2. Google Chromeを開き、アドレスバーに `chrome://extensions/` を入力。
 3. 右上の「デベロッパーモード」をONにする。
-4. 「パッケージ化されていない拡張機能を読み込む」をクリックし、解凍したフォルダ内の `grok-sakura-checker` フォルダを選択。
+4. 「パッケージ化されていない拡張機能を読み込む」をクリックし、解凍したフォルダ内の `grok_and_cat_patrol` フォルダを選択。
 
 ## 📖 使い方
 
@@ -52,7 +52,7 @@ A Chrome extension to instantly analyze and patrol suspicious accounts on the X 
 1. Download this repository (Download ZIP and extract, or `git clone`).
 2. Open Google Chrome and go to `chrome://extensions/`.
 3. Enable "Developer mode" in the top right.
-4. Click "Load unpacked" and select the `grok-sakura-checker` folder.
+4. Click "Load unpacked" and select the `grok_and_cat_patrol` folder.
 
 ## 📖 How to Use
 
